@@ -1,38 +1,11 @@
 /*:
- * @plugindesc MMORPG Devkit
- * @author Vinxce
-
- * @help
- * TODO --> Link to API doc.
+ * @plugindesc MMORPG Login Title Screen
+ * @author Chambers
  */
-
-//=============================================================================
-// MMO.js
-//=============================================================================
-//
-// Needs to be rewritten into a core file, with more modularity.
-// Will be configured by a .conf file (feature to do)
-//
-
-
-var $mmo;
 
 (function() {
 
-	var parameters = PluginManager.parameters('MMO');
-
-	// Testing purpose, can it be turned in something useful?
-    var _Game_Interpreter_pluginCommand =
-            Game_Interpreter.prototype.pluginCommand;
-    Game_Interpreter.prototype.pluginCommand = function(command, args) {
-        _Game_Interpreter_pluginCommand.call(this, command, args);
-        if (command === 'MMO') {
-            switch (args[0]) {
-	            case 'Command':
-	            	console.log("Do action"); 
-	        }
-	    }
-    };
+	var parameters = PluginManager.parameters('mmo_login');
 
 
 	//-----------------------------------------------------------------------------
@@ -59,7 +32,7 @@ var $mmo;
 	MMO_Scene_Title.prototype.create = function() {
 	    Scene_Base.prototype.create.call(this);
 	    this.createBackground();
-	    this.createForeground();
+	    //this.createForeground();
 	    // this.createWindowLayer();
 	    // this.createCommandWindow();
 	};
@@ -68,7 +41,6 @@ var $mmo;
 	    Scene_Base.prototype.start.call(this);
 	    SceneManager.clearStack();
 	    this.centerSprite(this._backSprite1);
-	    this.centerSprite(this._backSprite2);
 	    this.playTitleMusic();
 	    this.startFadeIn(this.fadeSpeed(), false);
 	    this.createLoginForm();
@@ -87,11 +59,6 @@ var $mmo;
 	    SceneManager.snapForBackground();
 	};
 
-
-	// Testing purpose, need to be rewritten into something more modulable,
-	// maybe using template file?
-	// Can be wise to work on a set of sprite-based form inputs for
-	// a better visual integration.
 	MMO_Scene_Title.prototype.createLoginForm = function() {
 		$("#ErrorPrinter").append(
 			'<div id="LoginForm" class="panel panel-primary" style="width:'+(Graphics.boxWidth - (Graphics.boxWidth / 3))+'px">'+
@@ -115,7 +82,7 @@ var $mmo;
 		$(".login-input").keypress(function(e){
 			if (e.which == 13) { //enter
 				that.connectAttempt();
-			}; 
+			};
 		})
 		$("#btnConnect").click(function(){that.connectAttempt()})
 	}
@@ -158,9 +125,7 @@ var $mmo;
 
 	MMO_Scene_Title.prototype.createBackground = function() {
 	    this._backSprite1 = new Sprite(ImageManager.loadTitle1($dataSystem.title1Name));
-	    this._backSprite2 = new Sprite(ImageManager.loadTitle2($dataSystem.title2Name));
 	    this.addChild(this._backSprite1);
-	    this.addChild(this._backSprite2);
 	};
 
 	MMO_Scene_Title.prototype.createForeground = function() {
@@ -201,7 +166,7 @@ var $mmo;
     //-----------------------------------------------------------------------------
 	//
 	// Override of Scene_Boot.start, for calling our own Scene_Title!
-	// 
+	//
 
 	Scene_Boot.prototype.start = function() {
 	    Scene_Base.prototype.start.call(this);
@@ -227,7 +192,7 @@ var $mmo;
 	//
 	// Overriding 'Input._onKeyDown' to pass 'event' as parameter
 	// to 'Input._shouldPreventDefault'
-	// 
+	//
 
 	Input._onKeyDown = function(event) {
 	    if (this._shouldPreventDefault(event)) {
@@ -264,26 +229,5 @@ var $mmo;
 	    return false;
 	};
 
-
-
-	//-----------------------------------------------------------------------------
-	// MMO
-	//
-	// Lot of work to do here!
-	//
-
-    var MMO = function() {
-    	this.initialize();
-    }
-
-    MMO.prototype.initialize = function() {
-    	// SceneManager.
-    	this._bindBaseEvents();
-    }
-
-    MMO.prototype._bindBaseEvents = function() {
-    }
-
-    $mmo = new MMO();
 
 })();
