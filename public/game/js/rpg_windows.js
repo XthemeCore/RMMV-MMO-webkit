@@ -1582,8 +1582,6 @@ Window_MenuCommand.prototype.makeCommandList = function() {
     this.addFormationCommand();
     this.addOriginalCommands();
     this.addOptionsCommand();
-    this.addSaveCommand();
-    this.addGameEndCommand();
 };
 
 Window_MenuCommand.prototype.addMainCommands = function() {
@@ -1619,18 +1617,6 @@ Window_MenuCommand.prototype.addOptionsCommand = function() {
     }
 };
 
-Window_MenuCommand.prototype.addSaveCommand = function() {
-    if (this.needsCommand('save')) {
-        var enabled = this.isSaveEnabled();
-        this.addCommand(TextManager.save, 'save', enabled);
-    }
-};
-
-Window_MenuCommand.prototype.addGameEndCommand = function() {
-    var enabled = this.isGameEndEnabled();
-    this.addCommand(TextManager.gameEnd, 'gameEnd', enabled);
-};
-
 Window_MenuCommand.prototype.needsCommand = function(name) {
     var flags = $dataSystem.menuCommands;
     if (flags) {
@@ -1645,8 +1631,6 @@ Window_MenuCommand.prototype.needsCommand = function(name) {
             return flags[3];
         case 'formation':
             return flags[4];
-        case 'save':
-            return flags[5];
         }
     }
     return true;

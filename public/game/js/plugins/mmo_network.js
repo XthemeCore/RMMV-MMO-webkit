@@ -26,7 +26,7 @@ var clientVersion = "1.0.1a";
 
 (function() {
 
-	var parameters = PluginManager.parameters('Network');
+	var parameters = PluginManager.parameters('mmo_network');
     var server_ip = String(parameters['Server IP'] || '127.0.0.1');
     var server_port = String(parameters['Server port'] || '8000');
 
@@ -64,6 +64,7 @@ var clientVersion = "1.0.1a";
         });
         this.socket.on('mmo_error', function(data){
             console.error(data.code, data.msg);
+
             //Throw error to the screen!
             that.socket.close();
             throw new Error(data.msg);
@@ -79,7 +80,7 @@ var clientVersion = "1.0.1a";
 
     Network.prototype.emit = function(type, data) {
         this.socket.emit(type, data);
-    }    
+    }
 
     $network = new Network(server_ip, server_port);
 
